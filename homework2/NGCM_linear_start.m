@@ -52,7 +52,7 @@ margprod=R-1+delta;
 % khat_t+1 - ckrat*chat_t - (margprod+(1-delta)) khat_t -kbar^theta*zbar*zhat_t=0
 
 % order c,k,z
-A=[-sigma beta*alpha*(alpha-1)*kbar^(alpha)-1; 0 1];
+A=[-sigma beta*alpha*(alpha-1)*kbar^(alpha-1); 0 1];
 
 B= [-sigma 0; -ckrat alpha*kbar^(alpha-1)+(1-delta)];
 
@@ -67,8 +67,8 @@ aaa=inv(ev);
 
 BKcond=sum(abs(diag(lambda))>1);
 %If all the eigenvalues are less than 1 in absolute value then the system is stable. 
-% If all the eigenvalues are greater than 1 in absolute value then the system is unstable. 
-% If at least one eigenvalue is less than 1 in absolute value the system is saddle-path stable.
+%If all the eigenvalues are greater than 1 in absolute value then the system is unstable unless we start initially from steady state. 
+%If at least one eigenvalue is less than 1 in absolute value the system is saddle-path stable.
 
 if BKcond~=1
     disp('BK conditions not satisfied')
