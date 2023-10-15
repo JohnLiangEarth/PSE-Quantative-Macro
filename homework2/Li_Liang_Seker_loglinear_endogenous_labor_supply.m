@@ -3,6 +3,13 @@
 % Endogenous Labor Supply Model
 % =====================
 
+close all
+clear all
+
+% change location to the folder where this m file is saved
+mfile_name          = mfilename('fullpath');  % This line of code retrieves the full path of the current MATLAB file and assigns it to the variable mfile_name. The mfilename function with the argument 'fullpath' returns the full path of the currently executing file, including the file name and extension. The full path is then assigned to the variable mfile_name.
+[pathstr,name,ext]  = fileparts(mfile_name);
+cd(pathstr);
 
 
 % parameters
@@ -32,7 +39,7 @@ lbar = 1/3;
 % From the three equations above, we get:
 % theta * lbar^(mu+sigma) = beta*(1-alpha)*(m^alpha-delta*m)^(-sigma) * m^alpha
 
-theta = lbar^(-mu-sigma) * beta*(1-alpha)*(m^alpha-delta*m)^(-sigma) * m^alpha;
+theta = lbar^(-mu-sigma) *(1-alpha)*(m^alpha-delta*m)^(-sigma) * m^alpha;
 
 % Steady State kbar and cbar
 
@@ -46,7 +53,7 @@ cbar = -delta* kbar + kbar^alpha * lbar^(1-alpha);
 % A x_{t+1} = B x_t, note that here xt is the deviation from the steady state.
 % xt [kt;ct;lt]
 A = [1, 0, 0;
-    alpha*(alpha-1)*lbar^(1-alpha)*kbar^(alpha-1), -sigma, beta*alpha*( 1-alpha ) * kbar^(alpha-1) * lbar^(1-alpha);
+    beta*alpha*(alpha-1)*lbar^(1-alpha)*kbar^(alpha-1), -sigma, beta*alpha*( 1-alpha ) * kbar^(alpha-1) * lbar^(1-alpha);
     0, 0, 0];
 
 B = [ (1-delta)+ alpha * kbar^(alpha-1) * lbar^(1-alpha), - cbar/kbar, (1-alpha)*kbar^(alpha-1)* lbar^(1-alpha);
@@ -82,6 +89,8 @@ end
 k = k_lin .* kbar + kbar;
 c = c_lin .* cbar + cbar;
 l = l_lin .* lbar + lbar;
+
+set(gcf, 'unit', 'centimeters', 'position', [10 5 21 18]);
 
 subplot(3,1,1)
 plot(k,'Linewidth',2);
@@ -123,8 +132,7 @@ specialPointLabelL = '$\bar{l}$'; % The label for the special point
 line([1, 150], [specialPointL, specialPointL], 'Color', 'red', 'LineStyle', '--', 'LineWidth', 1);
 text(0.5, specialPointL, specialPointLabelL,'interpreter','latex','FontSize', 12, 'HorizontalAlignment', 'right', 'VerticalAlignment', 'middle');
 
-saveas(gcf,'Endongenous_Labor_Supply_Transition.png');
-hold off; 
+saveas(gcf,'.\figures\Endongenous_Labor_Supply_Transition.png');
 
 
 
