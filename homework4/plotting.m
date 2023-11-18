@@ -161,9 +161,15 @@ disp([mean(std(log(Z_sim)')),mean(std(z_cont')),(sigmaepsilon^2/(1-rho^2))^0.5])
 disp(['Output Sd.     ','Labor Sd.     ','Consumption Sd.   ','Investment Sd.   '])
 % generate the standard deviations
 disp([mean(std( y_sim_lin(:,100:T)')),...
-    mean(std(L_sim_lin(:,100:T)')),...
-    mean(std(c_sim_lin(:,100:T)')),...
-    mean(std(inv_sim_lin(:,100:T)'))])
+    mean(std( L_sim_lin(:,100:T)')),...
+    mean(std( c_sim_lin(:,100:T)')),...
+    mean(std( inv_sim_lin(:,100:T)')) ])
+
+disp(['Output CV.     ','Labor CV.     ','Consumption CV.   ','Investment CV.   '])
+disp([mean(std( y_sim_lin(:,100:T)')./mean(y_sim_lin(:,100:T)')),...
+    mean(std( L_sim_lin(:,100:T)')./mean(L_sim_lin(:,100:T)')),...
+    mean(std( c_sim_lin(:,100:T)')./mean(c_sim_lin(:,100:T)')),...
+    mean(std( inv_sim_lin(:,100:T)')./ mean(inv_sim_lin(:,100:T)') )])
 
 
 % correlation
@@ -172,12 +178,14 @@ rho_emp_cont = zeros(N_sim,1);
 corr_Cy_lin = zeros(N_sim,1);
 corr_invy_lin = zeros(N_sim,1);
 corr_Ly_lin = zeros(N_sim,1);
+corr_IC_lin = zeros(N_sim,1);
 for i=1:N_sim
     rho_emp(i)=corr(log(Z_sim(i,100:end-1))',log(Z_sim(i,101:end))');
     rho_emp_cont(i)=corr(z_cont(i,100:end-1)',z_cont(i,101:end)');
     corr_Cy_lin(i)=corr(y_sim_lin(i,100:T)',c_sim_lin(i,100:T)');
     corr_invy_lin(i)=corr(y_sim_lin(i,100:T)',inv_sim_lin(i,100:T)');
     corr_Ly_lin(i)=corr(y_sim_lin(i,100:T)',L_sim_lin(i,100:T)');
+    corr_IC_lin(i)=corr(inv_sim_lin(i,100:T)',c_sim_lin(i,100:T)');
 end
 
 
@@ -187,10 +195,11 @@ rho_emp_cont_mean = mean(rho_emp_cont);
 corr_Cy_lin_mean = mean(corr_Cy_lin);
 corr_invy_lin_mean = mean(corr_invy_lin);
 corr_Ly_lin_mean = mean(corr_Ly_lin);
+corr_IC_lin_mean = mean(corr_IC_lin);
 
-disp(['Output-Consumption Corr.     ','Output-Investment Corr.     ','Output-Labor Corr.    '])
+disp(['Output-Consumption Corr.     ','Output-Investment Corr.     ','Output-Labor Corr.    ', 'Investment-Consumption Corr.    '])
 % generate the standard deviations
-disp([corr_Cy_lin_mean,corr_invy_lin_mean,corr_Ly_lin_mean])
+disp([corr_Cy_lin_mean,corr_invy_lin_mean,corr_Ly_lin_mean, corr_IC_lin_mean])
 
 %% Moments, discrete
 disp(['Discrete Z Shock Sd.           ','Continuous Z Shock Sd.        ','Real Z Schock Sd.         '])
@@ -202,6 +211,14 @@ disp([mean(std( y_sim_lin_discrete(:,100:T)')),...
     mean(std(L_sim_lin_discrete(:,100:T)')),...
     mean(std(c_sim_lin_discrete(:,100:T)')),...
     mean(std(inv_sim_lin_discrete(:,100:T)'))])
+
+
+disp(['Output CV.     ','Labor CV.     ','Consumption CV.   ','Investment CV.   '])
+disp([mean(std( y_sim_lin_discrete(:,100:T)')./mean(y_sim_lin_discrete(:,100:T)')),...
+    mean(std( L_sim_lin_discrete(:,100:T)')./mean(L_sim_lin_discrete(:,100:T)')),...
+    mean(std( c_sim_lin_discrete(:,100:T)')./mean(c_sim_lin_discrete(:,100:T)')),...
+    mean(std( inv_sim_lin_discrete(:,100:T)')./ mean(inv_sim_lin_discrete(:,100:T)') )])
+
 
 
 % correlation

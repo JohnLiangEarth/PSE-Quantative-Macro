@@ -372,7 +372,7 @@ while dV>criter_V
 %     disp(dV)
     
     % interpolate
-    Valuefunpos = griddedInterpolant(kgrid,V,'linear');
+    Valuefunpos = griddedInterpolant(kgrid,V,'spline');
 end
 toc;
 display(iter)
@@ -441,4 +441,4 @@ figure_num = figure_num+1;
 
 
 %%
-plotting
+%plotting

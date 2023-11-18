@@ -16,14 +16,14 @@ cd(pathstr);
 % ============
 
 Kshare=1/3;
-Rbar=1.01;
+Rbar=1.01; % This is the interest rate minus depreciation
 Lbar=1/3;
-InvKrat=0.05;
+InvKrat=0.05; % depreciation, also the investment/capital ratio in the steady state
 
 % ============
 % Exogenous parameters
 % ============
-gamma = 1.001; % CRRA
+gamma = 2 ; % CRRA
 rho = 0.95;   % persistence of TFP shock
 sigmaepsilon = 0.007; % volatility of TFP shock
 psi=1; %inverse Frisch elasticity
